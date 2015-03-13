@@ -10,33 +10,38 @@ var bio = {
 		"location": "Oakland, CA"
     },
     "skills" : ["HTML", "CSS", "JavaScript","Java"],
-    "bioPic":"images/fry.jpg"
+    "bioPic":"images/missisippi.jpg"
 }
 
 
 bio.display = function() {
     var formattedName = HTMLheaderName.replace("%data%",bio.name);
     var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
-    $("#header").prepend(formattedRole).prepend(formattedName);
-    var formattedMobile = HTMLmobile.replace("%data%",bio.contacts.mobile_number);
+    var formattedWelcomeMessage = HTMLWelcomeMsg.replace("%data%", bio.welcomeMessage);
+    var formattedMobile = HTMLmobile.replace("%data%",bio.contacts.mobile);
     var formattedEmail = HTMLemail.replace("%data%",bio.contacts.email);
     var formattedGithub = HTMLgithub.replace("%data%",bio.contacts.github);
+    var formattedTwitter = HTMLtwitter.replace("%data%",bio.contacts.twitter);
     var formattedLocation = HTMLlocation.replace("%data%",bio.contacts.location);
+    var formattedPic = HTMLbioPic.replace("%data%",bio.bioPic);
 
-    $("#topContacts").append(formattedMobile)
+    $("#header").prepend(formattedRole).prepend(formattedName);
+
+    $("#topContacts")
+        .append(formattedMobile)
+        .append(formattedEmail)
+        .append(formattedGithub)
+        .append(formattedTwitter)
+        .append(formattedLocation);
+
+    $("#footerContacts")
+        .append(formattedMobile)
         .append(formattedEmail)
         .append(formattedGithub)
         .append(formattedLocation);
 
-    $("#footerContacts").append(formattedMobile)
-        .append(formattedEmail)
-        .append(formattedGithub)
-        .append(formattedLocation);
 
-    var formattedBioPic = HTMLbioPic.replace("%data%",bio.pictureURL);
-    var formattedWelcomeMsg = HTMLWelcomeMsg.replace("%data%", bio.welcomeMessage);
-
-    $("#header").append(formattedBioPic).append(formattedWelcomeMsg);
+    $("#header").append(formattedPic).append(formattedWelcomeMessage);
 
     if (bio.skills.length > 0) {
         $('#header').append(HTMLskillsStart);
