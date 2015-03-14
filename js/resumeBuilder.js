@@ -13,7 +13,6 @@ var bio = {
     "bioPic":"images/missisippi.jpg"
 }
 
-
 bio.display = function() {
     var formattedName = HTMLheaderName.replace("%data%",bio.name);
     var formattedRole = HTMLheaderRole.replace("%data%",bio.role);
@@ -38,6 +37,7 @@ bio.display = function() {
         .append(formattedMobile)
         .append(formattedEmail)
         .append(formattedGithub)
+        .append(formattedTwitter)
         .append(formattedLocation);
 
 
@@ -53,76 +53,83 @@ bio.display = function() {
     }
 };
 
-
 var education = {
-	"schools": [
-		{
-			"name": "University of Minnesota",
-			"location": "Minneapolis, MN",
-			"degree": "Bachelor of Science",
-			"majors": ["Computer Science"],
-			"dates": "2002-2004, 2008-2010",
-			"url": "twin-cities.umn.edu"
-		},
-		{
-			"name": "Normandale Community College",
-			"location": "Bloomington, MN",
-			"degree": "Associate of Science",
-			"major": ["Computer Science"],
-			"dates": "2006-2008",
-			"url": "www.normandale.edu"
-		}
-	],
-	"onlineCourses": [
-		{
-			"title": "JavaScript Crash Course",
-			"school": "Udacity",
-			"date": "",
-			"url": ""
-		},
-		{
-			"title": "",
-			"school": "Treehouse",
-			"date": "",
-			"url": ""
-		}
-	]
-};
+    "schools": [
+        {
+            "name": "University of Minnesota",
+            "location": "Minneapolis, MN",
+            "degree": "Bachelor of Science",
+            "major": "Computer Science",
+            "dates": "2010",
+            "url": "twin-cities.umn.edu"
+        },
+        {
+            "name": "Normandale Community College",
+            "location": "Bloomington, MN",
+            "degree": "Associate of Science",
+            "major": ["Computer Science"],
+            "dates": "2006-2008",
+            "url": "www.normandale.edu"
+         }
+    ],
+    "onlineCourses": [
+        {
+            "title": "Front-End Web Developer",
+            "school": "Udacity Nanodegree",
+            "date": "2015",
+            "url": "https://www.udacity.com/course/nd001",
+        },
+        {
+            "title": "Front-End Web Development",
+            "school": "Treehouse",
+            "date": "2014",
+            "url": "http://teamtreehouse.com/tracks/front-end-web-development",
+        },
+    ],
+    "display": function() {
+        var schoolStart = HTMLschoolStart;
+
+        $('#education').append(schoolStart);
+        // loop through brick-and-mortar education
+        for(var i = 0; i < education.schools.length; i++) {
+            var schoolName = HTMLschoolName.replace("%data%", education.schools[i].name);
+            $('#education').append(schoolName);
+
+            var schoolLocation = HTMLschoolLocation.replace("%data%", education.schools[i].location);
+            $('#education').append(schoolLocation);
+
+            var schoolDegree = HTMLschoolDegree.replace("%data%", education.schools[i].degree);
+            $('#education').append(schoolDegree);
+
+            var schoolMajor = HTMLschoolMajor.replace("%data%", education.schools[i].major);
+            $('#education').append(schoolMajor);
+
+            var schoolDates = HTMLschoolDates.replace("%data%", education.schools[i].dates);
+            $('#education').append(schoolDates);
+        }
 
 
-education.display = function(){
-    education.schools.forEach(function(school) {
-        $("#education").append(HTMLschoolStart);
+        var onlineClasses = HTMLonlineClasses;
+        $('#education').append(onlineClasses);
+        // loop through online courses
+        for(var j = 0; j < education.onlineCourses.length; j++) {
+            var onlineTitle = HTMLonlineTitle.replace("%data%", education.onlineCourses[j].title);
+            $('#education').append(onlineTitle);
 
-        var formattedSchoolName = HTMLschoolName.replace("%data%", school.name).replace('#', school.url);
-        var formattedSchoolLocation = HTMLschoolLocation.replace("%data%", school.location);
-        var formattedSchoolDegree = HTMLschoolDegree.replace("%data%", school.degree);
-        var formattedSchoolDates = HTMLschoolDates.replace("%data%", school.dates_attended);
+            var onlineSchool = HTMLonlineSchool.replace("%data%", education.onlineCourses[j].school);
+            $('#education').append(onlineSchool);
 
-        $(".education-entry:last").append(formattedSchoolName);
-        $(".education-entry:last a").append(formattedSchoolDegree);
-        $(".education-entry:last").append(formattedSchoolLocation).append(formattedSchoolDates);
+            var onlineDates = HTMLonlineDates.replace("%data%", education.onlineCourses[j].date);
+            $('#education').append(onlineDates);
 
-        school.majors.forEach(function(major) {
-            var formattedSchoolMajor = HTMLschoolMajor.replace("%data%", major);
-            $(".education-entry:last").append(formattedSchoolMajor);
-        });
-    });
+            var onlineURL = HTMLonlineURL.replace("%data%", education.onlineCourses[j].url);
+            $('#education').append(onlineURL);
 
-    if (education.onlineCourses.length > 0) {
-        $(".education-entry").append(HTMLonlineClasses);
-        education.onlineCourses.forEach(function (course) {
-            var formattedOnlineTitle = HTMLonlineTitle.replace("%data%", course.title).replace('#', course.url);;
-            var formattedOnlineSchool = HTMLonlineSchool.replace("%data%", course.school);
-            var formattedOnlineDates = HTMLonlineDates.replace("%data%", course.dates_attended);
+            $('#education').append('<hr>');
+        }
+    },
+}
 
-            $(".education-entry:last")
-                .append(formattedOnlineTitle + formattedOnlineSchool)
-                .append(formattedOnlineDates)
-                .append('<br>');
-        });
-    }
-};
 
 var work = {
     "jobs": [
@@ -131,14 +138,14 @@ var work = {
 			"title": "Web Developer",
 			"location": "Oakland, CA",
 			"dates": " March 2015 - present",
-			"description": ""
+			"description": "I make websites and Web applications :)"
         },
         {
 			"employer": "ThoughtWorks",
 			"title": "Software Developer",
 			"location": "San Francisco, CA",
 			"dates": "June 2011 - Nov. 2014",
-			"description": ""
+			"description": "Waved our hands around at client presentations and magic happened."
         }
     ]
 }
@@ -162,43 +169,34 @@ work.display = function() {
 	}
 }
 
-
 var projects = {
-    "projects" : [
-        {
-			"title": "xxxx",
-			"dates": "xxx",
-			"description": "xxxx",
-            "images" : ["images/project1.png"]
-        },
-        {
-            "title" : "MochiStaker Clone (Phaser)",
-            "dates_worked" : "3 July 2014",
-            "description" : "",
-            "images" : ["images/project2.png"]
-        }
-    ]
-};
+  "projects": [
+      {
+        "title": "Udacity - Mockup to Website",
+        "dates": "2014",
+        "description": "Replicated a PDF mockup in HTML and CSS",
+        "images": ["images/mockup_to_webpage_screenshot1.png"]
+      }
+  ]
+}
 
 projects.display = function() {
-    projects.projects.forEach(function(project){
+    for (var project in projects["projects"]) {
         $("#projects").append(HTMLprojectStart);
+        var project = projects["projects"][project];
+        var formattedTitle = HTMLprojectTitle.replace("%data%", project["title"]);
+        var formattedDates = HTMLprojectDates.replace("%data%", project["dates"]);
+        var formattedDesc = HTMLprojectDescription.replace("%data%", project["description"]);
+        var formattedImages = "";
 
-        var formattedTitle = HTMLprojectTitle.replace("%data%",project.title);
-        var formattedDates = HTMLprojectDates.replace("%data%",project.dates_worked);
-        var formattedDescription = HTMLprojectDescription.replace("%data%",project.description);
-
-        $(".project-entry:last").append(formattedTitle);
-        $(".project-entry:last").append(formattedDates);
-        $(".project-entry:last").append(formattedDescription);
-        if (project.images.length > 0) {
-            project.images.forEach(function(image){
-                var formattedImage = HTMLprojectImage.replace("%data%",image);
-                $(".project-entry:last").append(formattedImage);
-            });
+        if (project["images"].length > 0){
+            for (image in project["images"]) {
+                formattedImages += HTMLprojectImage.replace("%data%", project["images"][image]);
+            };
         }
-    })
-};
+        $(".project-entry:last").append(formattedTitle + formattedDates + formattedDesc + formattedImages);
+    };
+}
 
 
 work.display();
